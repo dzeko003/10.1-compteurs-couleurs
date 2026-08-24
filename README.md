@@ -7,6 +7,8 @@ application de jeu vidéo. Indie, la mascotte, est un SVG entièrement dessiné 
 la main : elle respire en permanence, saute quand le score monte, et pleure
 quand il passe sous zéro.
 
+🔗 **[Voir la démo en ligne](https://dzeko003.github.io/10.1-compteurs-couleurs/)**
+
 ## Ce que fait le projet
 
 ### Terrain 1 — Le compteur (`compteur.html`)
