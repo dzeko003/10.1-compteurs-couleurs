@@ -1,0 +1,958 @@
+:root {
+  /* --- Fonds, en aplats --- */
+  --nuit: #121b1c;
+  --nuit-basse: #0c1314;
+  --nuit-haute: #1c2829;
+
+  /* --- Verre et bordures --- */
+  --voile: rgba(233, 226, 208, 0.05);
+  --voile-haut: rgba(233, 226, 208, 0.09);
+  --bord: rgba(233, 226, 208, 0.14);
+  --bord-vif: rgba(233, 226, 208, 0.28);
+
+  /* --- Texte --- */
+  --os: #e9e2d0;
+  --os-vif: #fff6ec;
+  --os-doux: #9aa79f;
+
+  /* --- Accents minéraux --- */
+  --verdigris: #3fa796;
+  --verdigris-profond: #2b7d70;
+  --braise: #e0645a;
+  --braise-profond: #a83c34;
+  --safran: #e0a458;
+  --jaspe: #a94a2e;
+  --jaspe-vif: #d97757;
+
+  /* --- Mascotte --- */
+  --tenue: #a94a2e;
+  --peau: #c9885a;
+  --peau-ombre: #a96c42;
+  --cheveux: #16131f;
+  --os-corne: #ece2cc;
+  --os-corne-ombre: #c9bda1;
+  --cuir: #6f4529;
+  --prunelle: #1b1b2a;
+
+  /* --- Typographie --- */
+  --police-titres: "Syne", "Trebuchet MS", system-ui, sans-serif;
+  --police-texte: "Familjen Grotesk", system-ui, -apple-system, sans-serif;
+  --police-chiffres: "Martian Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* --- Formes et rythme --- */
+  --rayon: 16px;
+  --rayon-l: 24px;
+  --espace-xs: 0.4rem;
+  --espace-s: 0.75rem;
+  --espace-m: 1.25rem;
+  --espace-l: 2rem;
+
+  --sortie: cubic-bezier(0.16, 1, 0.3, 1);
+  --rebond: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--police-texte);
+  line-height: 1.6;
+  color: var(--os);
+  background: var(--nuit); /* aplat : pas de dégradé */
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--police-titres);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* ---------------- Structure ---------------- */
+
+.enveloppe {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 var(--espace-m);
+}
+
+.enveloppe-large {
+  max-width: 940px;
+}
+
+main {
+  flex: 1;
+  padding: var(--espace-l) 0;
+}
+
+/* ---------------- En-tête ---------------- */
+
+.entete {
+  padding: var(--espace-l) 0 0;
+}
+
+.entete-contenu {
+  text-align: center;
+}
+
+.fil {
+  margin-bottom: var(--espace-m);
+  text-align: left;
+}
+
+.lien-retour {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espace-xs);
+  min-height: 40px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--os-doux);
+  text-decoration: none;
+  background: var(--voile);
+  border: 1px solid var(--bord);
+  border-radius: 999px;
+  transition:
+    color 0.25s var(--sortie),
+    background-color 0.25s var(--sortie),
+    transform 0.25s var(--sortie);
+}
+
+.lien-retour:hover {
+  color: var(--os);
+  background: var(--voile-haut);
+  transform: translateX(-3px);
+}
+
+/* L'étiquette de chapitre : un aplat de jaspe, franc, sans transparence. */
+.etiquette {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espace-xs);
+  font-family: var(--police-titres);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--os-vif);
+  background: var(--jaspe);
+  border-radius: 999px;
+  padding: 0.38rem 1rem;
+}
+
+.entete h1 {
+  margin-top: var(--espace-s);
+  font-size: clamp(1.7rem, 6vw, 2.5rem);
+  letter-spacing: -0.02em;
+}
+
+.sous-titre {
+  margin: var(--espace-s) auto 0;
+  max-width: 34rem;
+  color: var(--os-doux);
+  font-size: 0.98rem;
+}
+
+/* ---------------- Panneau de jeu ---------------- */
+
+.console {
+  position: relative;
+  margin-top: var(--espace-l);
+  padding: var(--espace-s);
+  background: var(--nuit-haute);
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon-l);
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.95);
+}
+
+/* ---------------- Barre d'état ---------------- */
+
+.hud {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-s);
+  padding: var(--espace-xs) var(--espace-xs) var(--espace-s);
+}
+
+.hud-niveau {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex: none;
+  font-family: var(--police-titres);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--safran);
+}
+
+.jauge {
+  flex: 1;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--nuit-basse);
+  border: 1px solid var(--bord);
+  overflow: hidden;
+}
+
+/* La largeur vient de --avancement, posée par le JavaScript. */
+.jauge-barre {
+  width: var(--avancement, 0%);
+  height: 100%;
+  background: var(--safran);
+  transition: width 0.45s var(--sortie);
+}
+
+.hud-vies {
+  display: flex;
+  gap: 0.15rem;
+  flex: none;
+}
+
+.coeur {
+  font-size: 1.1rem;
+  color: var(--braise);
+  transition:
+    opacity 0.3s var(--sortie),
+    transform 0.3s var(--rebond);
+}
+
+.coeur-vide {
+  opacity: 0.2;
+  transform: scale(0.8);
+}
+
+/* ---------------- Scène ---------------- */
+
+.scene {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  min-height: 320px;
+  border-radius: var(--rayon);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* La teinturerie n'a pas de score à afficher : sa scène est plus ramassée. */
+.scene-courte {
+  aspect-ratio: 1 / 1;
+}
+
+.decor {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Voile de couleur unie qui teinte la scène — la teinturerie s'en sert. */
+.voile-couleur {
+  position: absolute;
+  inset: 0;
+  background: var(--tenue);
+  opacity: 0.16;
+  mix-blend-mode: soft-light;
+  transition: background-color 0.5s var(--sortie);
+}
+
+.avatar {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  width: 68%;
+  max-width: 280px;
+  transform: translateX(-50%);
+  overflow: visible;
+}
+
+/* Score et humeur, posés en surimpression au-dessus de la scène. */
+.surimpression {
+  position: absolute;
+  top: var(--espace-s);
+  left: 0;
+  right: 0;
+  display: grid;
+  justify-items: center;
+  gap: var(--espace-xs);
+  pointer-events: none;
+}
+
+.score {
+  font-family: var(--police-chiffres);
+  font-size: clamp(2.6rem, 12vw, 4rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--os);
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
+  transition: color 0.3s var(--sortie);
+}
+
+.score-positif {
+  color: var(--verdigris);
+}
+.score-negatif {
+  color: var(--braise);
+}
+.score-zero {
+  color: var(--os);
+}
+
+.score-anime {
+  animation: pop 420ms var(--rebond);
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  38% {
+    transform: scale(1.24);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.badge-etat {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espace-xs);
+  white-space: nowrap;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--os);
+  background: var(--nuit-basse);
+  border: 1px solid var(--bord);
+  border-radius: 999px;
+  padding: 0.28rem 0.9rem;
+  transition:
+    color 0.3s var(--sortie),
+    border-color 0.3s var(--sortie);
+}
+
+.badge-positif {
+  color: var(--verdigris);
+  border-color: var(--verdigris-profond);
+}
+.badge-negatif {
+  color: var(--braise);
+  border-color: var(--braise-profond);
+}
+
+/* ---------------- Commandes en losange ---------------- */
+
+.commandes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espace-m);
+  margin-top: calc(var(--espace-l) * -1);
+  padding-bottom: var(--espace-s);
+  position: relative;
+  z-index: 2;
+}
+
+.losange {
+  display: grid;
+  place-content: center;
+  width: 62px;
+  height: 62px;
+  border: 1px solid var(--bord-vif);
+  border-radius: 18px;
+  color: var(--os-vif);
+  background: var(--jaspe);
+  cursor: pointer;
+  transform: rotate(45deg);
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.95);
+  transition:
+    transform 0.28s var(--rebond),
+    box-shadow 0.28s var(--sortie),
+    filter 0.2s ease;
+}
+
+.losange .icone {
+  transform: rotate(-45deg);
+  font-size: 1.5rem;
+}
+
+.losange:hover {
+  filter: brightness(1.14);
+  transform: rotate(45deg) translateY(-4px) scale(1.04);
+}
+.losange:active {
+  transform: rotate(45deg) scale(0.93);
+  box-shadow: 0 4px 10px -8px rgba(0, 0, 0, 0.95);
+}
+
+.losange-plus {
+  background: var(--verdigris-profond);
+}
+.losange-moins {
+  background: var(--braise-profond);
+}
+
+.losange-reset {
+  width: 52px;
+  height: 52px;
+  background: var(--nuit-basse);
+  color: var(--os-doux);
+}
+
+.losange-reset .icone {
+  font-size: 1.2rem;
+}
+.losange-reset:hover {
+  color: var(--os);
+}
+
+/* ---------------- Boutons ---------------- */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espace-xs);
+  min-height: 48px;
+  padding: 0.7rem 1.35rem;
+  font-family: var(--police-titres);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--os-vif);
+  text-decoration: none;
+  background: var(--jaspe);
+  border: 1px solid var(--bord-vif);
+  border-radius: var(--rayon);
+  cursor: pointer;
+  transition:
+    transform 0.25s var(--rebond),
+    filter 0.2s ease;
+}
+
+.bouton:hover {
+  filter: brightness(1.14);
+  transform: translateY(-3px);
+}
+.bouton:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.bouton-verre {
+  color: var(--os);
+  background: var(--nuit-basse);
+  border-color: var(--bord);
+}
+
+.bouton-verre:hover {
+  background: var(--nuit-haute);
+}
+
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--safran);
+  outline-offset: 3px;
+  border-radius: var(--rayon);
+}
+
+/* Icônes Phosphor : ce sont des glyphes, on les dimensionne au font-size. */
+.icone {
+  display: inline-block;
+  font-size: 1.15em;
+  line-height: 1;
+  flex: none;
+}
+
+.astuce {
+  margin-top: var(--espace-m);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--os-doux);
+}
+
+.touche {
+  font-family: var(--police-chiffres);
+  font-size: 0.7rem;
+  color: var(--os);
+  background: var(--nuit-haute);
+  border: 1px solid var(--bord);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  padding: 0.1rem 0.4rem;
+}
+
+/* ==================================================================
+   LA MASCOTTE
+================================================================== */
+
+.ombre {
+  fill: #000000;
+  opacity: 0.35;
+}
+
+.tunique {
+  fill: var(--tenue);
+  transition: fill 0.5s var(--sortie);
+}
+.tunique-ombre {
+  fill: #000000;
+  opacity: 0.16;
+}
+.col {
+  fill: #000000;
+  opacity: 0.22;
+}
+.bandeau {
+  fill: var(--tenue);
+  transition: fill 0.5s var(--sortie);
+}
+.perle {
+  fill: var(--safran);
+}
+.plume-voile {
+  fill: var(--tenue);
+  transition: fill 0.5s var(--sortie);
+}
+.ceinture {
+  fill: var(--cuir);
+}
+.boucle {
+  fill: var(--safran);
+}
+.corne {
+  fill: var(--os-corne);
+}
+
+.sourcil,
+.oeil-ferme,
+.bouche {
+  fill: none;
+  stroke: var(--prunelle);
+  stroke-linecap: round;
+}
+
+.sourcil {
+  stroke-width: 5;
+}
+.oeil-ferme {
+  stroke-width: 6;
+}
+.bouche {
+  stroke-width: 4;
+}
+
+.joue {
+  fill: #e8607a;
+  opacity: 0.35;
+}
+.larme {
+  fill: #7fd4ff;
+  opacity: 0.9;
+}
+
+/* Une seule expression à la fois. Le visage neutre est celui par défaut :
+   la mascotte reste correcte même sans classe d'humeur. */
+.visage {
+  display: none;
+}
+.visage-neutre {
+  display: block;
+}
+
+.avatar-joyeux .visage-neutre,
+.avatar-triste .visage-neutre {
+  display: none;
+}
+
+.avatar-joyeux .visage-joyeux,
+.avatar-triste .visage-triste {
+  display: block;
+}
+
+/* --- Repos : une respiration lente, et rien d'autre --- */
+.corps {
+  animation: respire 5s ease-in-out infinite;
+  transform-origin: 100px 264px;
+}
+
+@keyframes respire {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.008);
+  }
+}
+
+/* --- Tristesse : sanglots et larmes, en boucle --- */
+.avatar-triste .corps {
+  animation: sanglote 1.6s ease-in-out infinite;
+}
+
+@keyframes sanglote {
+  0%,
+  100% {
+    transform: translateY(6px) scale(0.985);
+  }
+  25% {
+    transform: translateY(9px) scale(0.982) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(9px) scale(0.982) rotate(1deg);
+  }
+}
+
+.avatar-triste .tete {
+  animation: tete-basse 1.6s ease-in-out infinite;
+  transform-origin: 100px 150px;
+}
+
+@keyframes tete-basse {
+  0%,
+  100% {
+    transform: rotate(-3deg) translateY(3px);
+  }
+  50% {
+    transform: rotate(-5deg) translateY(5px);
+  }
+}
+
+.larme-lente {
+  animation: pleure 1.6s ease-in infinite;
+}
+.larme-rapide {
+  animation: pleure 1.6s ease-in 0.6s infinite;
+}
+
+@keyframes pleure {
+  0% {
+    transform: translateY(0) scale(0.55);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(34px) scale(1.05);
+    opacity: 0;
+  }
+}
+
+/* --- Le saut : une seule fois, quand le score augmente ---
+   La classe .avatar-saute est posée par le JavaScript et retirée dès que
+   l'animation se termine. Elle passe devant l'état triste, d'où l'ordre. */
+.avatar-saute .corps,
+.avatar-triste.avatar-saute .corps {
+  animation: saute 720ms var(--rebond) 1;
+}
+
+@keyframes saute {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  32% {
+    transform: translateY(-20px) rotate(-3deg);
+  }
+  62% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.avatar-saute .bras-gauche {
+  animation: agite-gauche 720ms ease-in-out 1;
+  transform-origin: 53px 174px;
+}
+.avatar-saute .bras-droit {
+  animation: agite-droit 720ms ease-in-out 1;
+  transform-origin: 146px 174px;
+}
+
+@keyframes agite-gauche {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  45% {
+    transform: rotate(-28deg);
+  }
+}
+@keyframes agite-droit {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  45% {
+    transform: rotate(28deg);
+  }
+}
+
+/* Les étincelles n'apparaissent que le temps du saut. */
+.etincelles {
+  opacity: 0;
+}
+.avatar-saute .etincelles {
+  opacity: 1;
+}
+
+.etincelle {
+  fill: var(--safran);
+  transform-box: fill-box; /* sinon « center » désigne le centre du viewBox */
+  transform-origin: center;
+  opacity: 0;
+}
+
+.avatar-saute .etincelle-1 {
+  animation: scintille 720ms ease-out 1;
+}
+.avatar-saute .etincelle-2 {
+  animation: scintille 720ms ease-out 90ms 1;
+}
+.avatar-saute .etincelle-3 {
+  animation: scintille 720ms ease-out 180ms 1;
+}
+
+@keyframes scintille {
+  0% {
+    transform: scale(0.2) rotate(0deg);
+    opacity: 0;
+  }
+  45% {
+    transform: scale(1) rotate(45deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.4) rotate(90deg);
+    opacity: 0;
+  }
+}
+
+/* ==================================================================
+   PAGE D'ACCUEIL
+================================================================== */
+
+/* Médaillon d'accueil : la même scène et la même mascotte, cadrées en rond. */
+.portrait {
+  position: relative;
+  width: 190px;
+  aspect-ratio: 1;
+  margin: 0 auto var(--espace-m);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--bord-vif);
+}
+
+.portrait .avatar {
+  bottom: -16%;
+  width: 78%;
+}
+
+.grille-niveaux {
+  list-style: none;
+  display: grid;
+  gap: var(--espace-m);
+  margin-top: var(--espace-l);
+}
+
+.niveau {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-s);
+  padding: var(--espace-m);
+  background: var(--nuit-haute);
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon-l);
+  transition:
+    transform 0.3s var(--sortie),
+    border-color 0.3s var(--sortie);
+}
+
+.niveau:hover {
+  transform: translateY(-6px);
+  border-color: var(--jaspe-vif);
+}
+
+.vignette {
+  display: grid;
+  place-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: var(--rayon);
+  color: var(--safran);
+  background: var(--nuit-basse);
+  border: 1px solid var(--bord);
+}
+
+.vignette .icone {
+  font-size: 1.7rem;
+}
+
+.niveau h2 {
+  font-size: 1.3rem;
+}
+
+.niveau p {
+  color: var(--os-doux);
+}
+
+.marqueurs {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-xs);
+}
+
+.marqueur {
+  font-family: var(--police-chiffres);
+  font-size: 0.68rem;
+  color: var(--os-doux);
+  background: var(--nuit-basse);
+  border: 1px solid var(--bord);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+}
+
+.niveau .bouton {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* ==================================================================
+   LA TEINTURERIE
+================================================================== */
+
+.butin {
+  display: grid;
+  gap: var(--espace-s);
+  justify-items: center;
+  margin-top: var(--espace-m);
+  padding: var(--espace-m);
+  background: var(--nuit-basse);
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+}
+
+.butin-titre {
+  font-family: var(--police-titres);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--os-doux);
+}
+
+/* La pastille porte la couleur tirée ; le texte bascule en clair ou en
+   foncé selon la luminosité de cette couleur. */
+.code-couleur {
+  font-family: var(--police-chiffres);
+  font-size: clamp(1.1rem, 5vw, 1.6rem);
+  font-weight: 700;
+  color: var(--encre-code, #ffffff);
+  background: var(--tenue);
+  border: 2px solid var(--bord-vif);
+  border-radius: var(--rayon);
+  padding: 0.35rem 1rem;
+  user-select: all;
+  cursor: text;
+  transition:
+    background-color 0.5s var(--sortie),
+    color 0.5s var(--sortie);
+}
+
+.ligne-butin {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espace-s);
+}
+
+.message-copie {
+  min-height: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--safran);
+}
+
+.commandes-couleurs {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--espace-m);
+}
+
+/* ==================================================================
+   PIED DE PAGE
+================================================================== */
+
+.pied {
+  padding: var(--espace-l) 0;
+  text-align: center;
+  color: var(--os-doux);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--bord);
+}
+
+.pied-note {
+  margin-top: var(--espace-xs);
+  opacity: 0.7;
+}
+
+/* ==================================================================
+   POINTS DE RUPTURE
+================================================================== */
+
+@media (max-width: 400px) {
+  .commandes {
+    gap: var(--espace-s);
+  }
+  .losange {
+    width: 54px;
+    height: 54px;
+  }
+  .losange-reset {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+@media (min-width: 720px) {
+  .grille-niveaux {
+    grid-template-columns: 1fr 1fr;
+  }
+  main {
+    padding: calc(var(--espace-l) * 1.5) 0;
+  }
+}
+
+/* ==================================================================
+   MOUVEMENT RÉDUIT
+================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .larme {
+    opacity: 0.9;
+  }
+}
